@@ -26,7 +26,19 @@ jobs:
     steps:
       - run: echo World
          
-
+  print_env_var:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: cimg/node:12.16
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - run:
+          name: "Echo out an environment variable"
+          command: |
+            echo MY_NAME
+         
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
@@ -36,5 +48,6 @@ workflows:
       - print_world:
           requires:
             - print_hello
+      - print_env_var
 
 
