@@ -38,6 +38,40 @@ jobs:
           name: "Echo out an environment variable"
           command: |
             echo $MY_NAME
+
+
+  save_hello_world_output:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: cimg/node:12.16
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - run: echo "text to output here" > output.txt
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - target/output.txt
+            
+
+          
+
+
+  print_output_file:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: cimg/node:12.16
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+
+      - run: cat output.txt
+
+          
          
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -49,5 +83,7 @@ workflows:
           requires:
             - print_hello
       - print_env_var
+      - save_hello_world_output
+      - print_output_file
 
 
