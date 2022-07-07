@@ -68,7 +68,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/
-
       - run: cat ~/output.txt
 
           
@@ -84,6 +83,8 @@ workflows:
             - print_hello
       - print_env_var
       - save_hello_world_output
-      - print_output_file
+      - print_output_file:
+          requires:
+            - save_hello_world_output
 
 
