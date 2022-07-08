@@ -94,7 +94,7 @@ jobs:
     docker:
       - image: cimg/node:12.16
     steps:
-      - run: exit 1
+      # - run: exit 1
       - run:
           name: on error
           command: echo "Hello Error!"
@@ -115,6 +115,6 @@ workflows:
           requires:
             - save_hello_world_output
       - print_using_command
-      - my_error_check
+      # - my_error_check
 
 
